@@ -25,9 +25,6 @@
 #include "linked_list.h"
 
 pLinkedList makeList() {
-  // At this point the pLinkedList is not point to anything, let give
-  // something to it.
-
   // Allocate enough space for a linked list, but malloc return a (void*)
   // We need to cast it to a pLinkedList.
   pLinkedList linkedList = (pLinkedList) malloc(sizeof(LinkedList));
@@ -61,7 +58,7 @@ unsigned int appendToList(pLinkedList linkedList, T data) {
     // At this point we are at the last node.
     current->next = newNode;
 
-    linkedList->head = head; // Important!
+    linkedList->head = head;
   }
 
   linkedList->size++;
@@ -73,16 +70,11 @@ pNode popFront(pLinkedList linkedList) {
   if (linkedList == NULL) return NULL; // No linked list
   if (linkedList->head == NULL) return NULL; // Nothing in the list
 
-  // [ 6 ] -> [ 7 ] -> [ 9 ]
-  //  Head
   pNode front = linkedList->head;
 
-  // [ 7 ] -> [ 9 ]
-  // head
   linkedList->head = linkedList->head->next;
   linkedList->size--;
 
-  // [ 6 ] -> NULL;
   front->next = NULL;
 
   return front;
@@ -91,8 +83,7 @@ pNode popFront(pLinkedList linkedList) {
 void destroyList(pLinkedList *pPLinkedList) {
   if (pPLinkedList == NULL) return; // Is this even a thing?
 
-  pLinkedList linkedList = *pPLinkedList; // Here is our list. We don't
-  // really need this, but for readability we use it.
+  pLinkedList linkedList = *pPLinkedList;
 
   if (linkedList->head == NULL) { // Empty list...
     // Lets destroy the list!
