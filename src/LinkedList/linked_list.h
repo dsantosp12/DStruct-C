@@ -24,11 +24,18 @@
 #ifndef C_DSTRUCT_LINKED_LIST_H
 #define C_DSTRUCT_LINKED_LIST_H
 
+/**
+ * \brief     T is the template type used in the queue. For other types
+ * support, change 'int' to the type desired.
+ * */
 typedef int T;
 
 typedef struct Node Node;
 typedef Node* pNode;
 
+/**
+ * \brief     Declaration of the Node structure.
+ * */
 struct Node {
   T* data;
   pNode next;
@@ -37,23 +44,45 @@ struct Node {
 typedef struct LinkedList LinkedList;
 typedef LinkedList* pLinkedList;
 
+/**
+ * \brief     Declaration of the LinkedList structure.
+ * */
 struct LinkedList {
   pNode head;
-  unsigned int size; // NOTE: 4 more bytes no really necessary, but for
-  // looping and perfomace
+  unsigned int size;
 };
 
-// Create Linked List and initialize it. O(1) computation.
+/**
+ * \brief     Creates the LinkedList.
+ *
+ * \returns   pLinkedList
+ * */
 pLinkedList makeList();
 
-// Insert data to the list. O(n) computation. Why?
+/**
+ * \brief     Append data to the linked list.
+ *
+ * \param     pLinkedList linkedList, T data
+ *
+ * \return    unsigned int the new size of the queue.
+ * */
 unsigned int appendToList(pLinkedList linkedList, T data);
 
-// Remove the front node and returns it. O(1) computation
+/**
+ * \brief     Remove the front node and return it.
+ *
+ * \param     pLinkedList linkedList
+ *
+ * \return    pNode the node structure.
+ * */
 pNode popFront(pLinkedList linkedList);
 
-// Destroy a LinkedList. Notice that we are taking a pointer to a pLinkedList
-// O(n) computation. Why?
+/**
+ * \brief     Deallocate the linkedList and its nodes.
+ *
+ * \param     pLinkedList* linkedList
+ *
+ * */
 void destroyList(pLinkedList *linkedList);
 
 #endif //C_DSTRUCT_LINKED_LIST_H

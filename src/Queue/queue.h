@@ -24,24 +24,60 @@
 #ifndef C_DSTRUCT_QUEUE_H
 #define C_DSTRUCT_QUEUE_H
 
+/**
+ * \brief     T is the template type used in the queue. For other types
+ * support, change 'int' to the type desired.
+ * */
 typedef int T;
 
+/**
+ * \brief     A forward declaration of the queue. This gives the client
+ * access to the Queue object itself without knowing the expecificts of the
+ * implementation making the object opaque.
+ * */
 typedef struct Queue Queue;
 typedef Queue* pQueue;
 
-// Creates the queue.
+/**
+ * \brief     Creates the queue.
+ *
+ * \returns   pQueue
+ * */
 pQueue makeQueue();
 
-// Push data to the queue.
+/**
+ * \brief     Push a T to the queue.
+ *
+ * \param     pQueue queue, T data
+ *
+ * \return    size_t the new size of the queue.
+ * */
 size_t push(pQueue queue, T data);
 
-// Pop last item from the queue.
+/**
+ * \brief     Remove the next item in the queue.
+ *
+ * \param     pQueue queue
+ *
+ * \return    T*, where T is the data.
+ * */
 T* pop(pQueue queue);
 
-// Returns the size of the queue
+/**
+ * \brief     Returns the size of the current queue
+ *
+ * \param     pQueue queue
+ *
+ * \return    size_t the size of the queue.
+ * */
 size_t queueSize(pQueue queue);
 
-// Destroy the queue. :(
+/**
+ * \brief     Deallocates the queue and the data if any.
+ *
+ * \param     pQueue* pPqueue
+ *
+ * */
 void destroyQueue(pQueue* pPqueue);
 
 #endif //C_DSTRUCT_QUEUE_H
