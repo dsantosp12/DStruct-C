@@ -22,61 +22,77 @@
  * SOFTWARE.
  * */
 
-#include <stdlib.h>
-#include "queue.h"
-#include "../LinkedList/linked_list.h"
+#include <stddef.h>
+#include "../src/Queue/queue.h"
 
-struct Queue {
-  pLinkedList buffer;
-};
+unsigned int makeQueueTest() {
+  pQueue queue = NULL;
 
-// Creates the queue.
-pQueue makeQueue() {
-  pQueue newQueue = malloc(sizeof(Queue));
+  queue = makeQueue();
 
-  newQueue->buffer = makeList();
+  if (queue == NULL) return 0;
 
-  return newQueue;
+  destroyQueue(&queue);
+  return 1;
 }
 
-// Push data to the queue.
-size_t push(pQueue queue, T data) {
-  if (queue == NULL) return 0; // FAILED, returns 0.
+unsigned int pushTest() {
+  pQueue queue = makeQueue();
 
-  appendToList(queue->buffer, data);
+  if (push(queue, 5) != 1) return 0;
+  if (push(queue, 9) != 1) return 0;
+  if (push(queue, 3) != 1) return 0;
 
-  return queue->buffer->size;
+  pQueue queue1 = NULL;
+
+  if (push(queue1, 5) != 0) return 0;
+
+  destroyQueue(&queue);
+  return 1;
 }
 
-// Pop last item from the queue.
-T* pop(pQueue queue) {
-  if (queue == NULL) return NULL; // No Queue
+unsigned int popTest() {
+  pQueue queue = makeQueue();
 
-  pNode front = removeFront(queue->buffer);
+  push(queue, 4);
+  push(queue, 2);
+  push(queue, 1);
 
-  if (front == NULL) return NULL; // Nothing in the queue
+  if (*pop(queue) != 4) return 0;
+  if (*pop(queue) != 2) return 0;
+  if (*pop(queue) != 1) return 0;
 
-  // Else, data out!
-  return front->data;
+  destroyQueue(&queue);
+  return 1;
 }
 
-// Returns the size of the queue
-size_t queueSize(pQueue queue) {
-  return queue->buffer->size;
+unsigned int queueSizeTest() {
+  pQueue queue = makeQueue();
+
+  push(queue, 4);
+  push(queue, 4);
+  push(queue, 4);
+  push(queue, 4);
+  push(queue, 4);
+
+  if (queueSize(queue) != 5) return 0;
+
+  destroyQueue(&queue);
+  return 1;
 }
 
-// Destroy the queue. :(
-void destroyQueue(pQueue* pPqueue) {
-  if (pPqueue == NULL) return; // Nothing here.
+unsigned int destroyQueueTest() {
+  pQueue  queue = makeQueue();
 
-  pQueue queue = *pPqueue;
+  push(queue, 4);
+  push(queue, 4);
+  push(queue, 4);
+  push(queue, 4);
+  push(queue, 4);
 
-  destroyList(&queue->buffer);
-  queue->buffer = NULL;
+  destroyQueue(&queue);
 
-  free(queue);
-  *pPqueue = NULL;
-  pPqueue = NULL;
-  queue = NULL;
+  if (queue != NULL) return 0;
+
+  return 1;
 }
-
