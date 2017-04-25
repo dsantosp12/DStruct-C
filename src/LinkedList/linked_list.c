@@ -57,8 +57,6 @@ unsigned int appendToList(pLinkedList linkedList, T data) {
 
     // At this point we are at the last node.
     current->next = newNode;
-
-    linkedList->head = head;
   }
 
   linkedList->size++;
