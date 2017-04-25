@@ -35,8 +35,8 @@ int main() {
   SRunner* queueSuiteRunner = srunner_create(queueSuite);
 
   srunner_run_all(queueSuiteRunner, CK_NORMAL);
-  numberFailed += srunner_ntests_failed(queueSuiteRunner );
-  srunner_free(queueSuiteRunner );
+  numberFailed += srunner_ntests_failed(queueSuiteRunner);
+  srunner_free(queueSuiteRunner);
 
   // LinkedList Suite
   Suite* linkedListSuite = linkedList_test_suite();
