@@ -88,8 +88,8 @@ void destroyList(pLinkedList *pPLinkedList) {
     linkedList->size = 0;
     free(linkedList);
     linkedList = NULL;
+    *pPLinkedList = NULL;
     return;
-
   }
 
   // Lets destroy the nodes.
@@ -120,4 +120,5 @@ void destroyList(pLinkedList *pPLinkedList) {
   linkedList->size = 0;
   free(linkedList);
   linkedList = NULL;
+  *pPLinkedList = NULL;
 }

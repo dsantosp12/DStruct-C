@@ -24,18 +24,27 @@
 
 #include <stdlib.h>
 #include "queue_test.h"
+#include "linked_list_test.h"
 
 int main() {
 
   int numberFailed = 0;
 
-  Suite* suite = queue_test_suite();
-  SRunner* suiteRunner = srunner_create(suite);
+  // Queue Suite
+  Suite* queueSuite = queue_test_suite();
+  SRunner* queueSuiteRunner = srunner_create(queueSuite);
 
-  srunner_run_all(suiteRunner, CK_NORMAL);
+  srunner_run_all(queueSuiteRunner, CK_NORMAL);
+  numberFailed += srunner_ntests_failed(queueSuiteRunner );
+  srunner_free(queueSuiteRunner );
 
-  numberFailed = srunner_ntests_failed(suiteRunner);
-  srunner_free(suiteRunner);
+  // LinkedList Suite
+  Suite* linkedListSuite = linkedList_test_suite();
+  SRunner* linkedListRunner = srunner_create(linkedListSuite);
+
+  srunner_run_all(linkedListRunner, CK_NORMAL);
+  numberFailed += srunner_ntests_failed(linkedListRunner);
+  srunner_free(linkedListRunner);
 
   return (numberFailed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }

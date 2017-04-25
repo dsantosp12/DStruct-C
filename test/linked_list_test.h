@@ -23,67 +23,78 @@
  * */
 
 #include <stddef.h>
+#include <check.h>
+
 #include "../src/LinkedList/linked_list.h"
 
-// Returns 1 if passed, otherwise 0.
-unsigned int makeListTest() {
-  pLinkedList newList = 0;
+START_TEST(test_linkedList_make) {
+    pLinkedList newList = NULL;
 
-  newList = makeList();
+    newList = makeList();
 
-  if (newList == NULL) return 0;
+    ck_assert_ptr_nonnull(newList);
 
-  destroyList(&newList);
-  return 1;
-}
+    destroyList(&newList);
+  } END_TEST
 
-unsigned int appendToListTest() {
-  pLinkedList  list = makeList();
+START_TEST(test_linkedList_appendToList) {
+    pLinkedList list = makeList();
 
-  int arr[] = {5, 6, 7, 8};
+    int arr[] = {5, 6, 7, 8};
 
-  for (int i = 0; i < 4; i++)
-    appendToList(list, arr[i]);
+    for (int i = 0; i < 4; i++)
+      appendToList(list, arr[i]);
 
-  int i = 0;
-  for (pNode it = list->head; it->next != 0; it = it->next, i++) {
-    if (*it->data != arr[i]) return 0;
-  }
+    int i = 0;
+    for (pNode it = list->head; it->next != 0; it = it->next, i++)
+      ck_assert_int_eq(*it->data, arr[i]);
 
-  destroyList(&list);
-  return 1;
-}
+    destroyList(&list);
+  } END_TEST
 
-unsigned int popFrontTest() {
-  pLinkedList list = makeList();
+START_TEST(test_linkedList_removeFront) {
+    pLinkedList list = makeList();
 
-  int arr[] = {5, 6, 7, 8};
+    int arr[] = {5, 6, 7, 8};
 
-  for (int i = 0; i < 4; i++)
-    appendToList(list, arr[i]);
+    for (int i = 0; i < 4; i++)
+      appendToList(list, arr[i]);
 
-  if (*popFront(list)->data != 5) return 0;
-  if (*popFront(list)->data != 6) return 0;
-  if (*popFront(list)->data != 7) return 0;
-  if (*popFront(list)->data != 8) return 0;
-  if (*popFront(list)->data != NULL) return 0;
+    for (int j = 0; j < 4; j++)
+      ck_assert_int_eq(*popFront(list)->data, arr[j]);
 
-  destroyList(&list);
-  return 1;
-}
+    destroyList(&list);
+  } END_TEST
 
-unsigned int destroyListTest() {
-  pLinkedList list = makeList();
+START_TEST(test_linkedList_destroy) {
+    pLinkedList list = makeList();
 
-  int arr[] = {5, 6, 7, 8};
+    int arr[] = {5, 6, 7, 8};
 
-  for (int i = 0; i < 4; i++)
-    appendToList(list, arr[i]);
+    for (int i = 0; i < 4; i++)
+      appendToList(list, arr[i]);
 
-  destroyList(&list);
+    destroyList(&list);
 
-  if (list->head != NULL) return 0;
-  if (list->size != 0) return 0;
+    ck_assert_ptr_null(list);
 
-  return 1;
+  } END_TEST
+
+Suite* linkedList_test_suite() {
+  Suite *suite;
+  TCase *testCaseCore;
+
+  suite = suite_create("LinkedList");
+
+  testCaseCore = tcase_create("Core");
+
+  // Add test cases
+  tcase_add_test(testCaseCore, test_linkedList_make);
+  tcase_add_test(testCaseCore, test_linkedList_appendToList);
+  tcase_add_test(testCaseCore, test_linkedList_removeFront);
+  tcase_add_test(testCaseCore, test_linkedList_destroy);
+
+  suite_add_tcase(suite, testCaseCore);
+
+  return suite;
 }
