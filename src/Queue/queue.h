@@ -32,7 +32,7 @@ typedef int T;
 
 /**
  * \brief     A forward declaration of the queue. This gives the client
- * access to the Queue object itself without knowing the expecificts of the
+ * access to the Queue object itself without knowing the specifics of the
  * implementation making the object opaque.
  * */
 typedef struct Queue Queue;

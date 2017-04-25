@@ -23,54 +23,19 @@
  * */
 
 #include <stdlib.h>
-#include "queue.h"
-#include "../LinkedList/linked_list.h"
+#include "queue_test.h"
 
-struct Queue {
-  pLinkedList buffer;
-};
+int main() {
 
-pQueue makeQueue() {
-  pQueue newQueue = malloc(sizeof(Queue));
+  int numberFailed = 0;
 
-  newQueue->buffer = makeList();
+  Suite* suite = queue_test_suite();
+  SRunner* suiteRunner = srunner_create(suite);
 
-  return newQueue;
+  srunner_run_all(suiteRunner, CK_NORMAL);
+
+  numberFailed = srunner_ntests_failed(suiteRunner);
+  srunner_free(suiteRunner);
+
+  return (numberFailed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
-
-size_t push(pQueue queue, T data) {
-  if (queue == NULL) return 0; // FAILED, returns 0.
-
-  appendToList(queue->buffer, data);
-
-  return queue->buffer->size;
-}
-
-T* pop(pQueue queue) {
-  if (queue == NULL) return NULL; // No Queue
-
-  pNode front = popFront(queue->buffer);
-
-  if (front == NULL) return NULL; // Nothing in the queue
-
-  return front->data;
-}
-
-size_t queueSize(pQueue queue) {
-  return queue->buffer->size;
-}
-
-void destroyQueue(pQueue* pPqueue) {
-  if (pPqueue == NULL) return; // Nothing here.
-
-  pQueue queue = *pPqueue;
-
-  destroyList(&queue->buffer);
-  queue->buffer = NULL;
-
-  free(queue);
-  *pPqueue = NULL;
-  pPqueue = NULL;
-  queue = NULL;
-}
-
