@@ -28,6 +28,10 @@ pLinkedList makeList() {
   // Allocate enough space for a linked list, but malloc return a (void*)
   // We need to cast it to a pLinkedList.
   pLinkedList linkedList = (pLinkedList) malloc(sizeof(LinkedList));
+  if (linkedList == NULL) {
+    printf("Malloc failed\n");
+    return 0;
+  }
 
   // HOLY GRAIL STUFFS: Initialize everything!
   linkedList->head = NULL;
@@ -42,8 +46,16 @@ unsigned int appendToList(pLinkedList linkedList, T data) {
 
   // Because we are definitely appending a Node, lets make it.
   pNode newNode = (pNode) malloc(sizeof(Node));
+  if (newNode == NULL) {
+    printf("Malloc failed\n");
+    return 0;
+  }
   newNode->next = NULL;
   newNode->data = (T*) malloc(sizeof(T));
+  if (newNode->data == NULL) {
+    printf("Malloc failed\n");
+    return 0;
+  }
   *newNode->data = data;
 
   pNode head = linkedList->head;
