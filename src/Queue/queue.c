@@ -23,6 +23,7 @@
  * */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "queue.h"
 #include "../LinkedList/linked_list.h"
 

@@ -66,6 +66,20 @@ START_TEST(test_linkedList_removeFront) {
     destroyList(&list);
   } END_TEST
 
+START_TEST(test_linkedList_removeBack) {
+        pLinkedList list = makeList();
+
+        int arr[] = {5, 6, 7, 8};
+
+        for (int i = 0; i < 4; i++)
+            appendToList(list, arr[i]);
+
+        for (int j = 4; j < 0; j--)
+            ck_assert_int_eq(*popBack(list)->data, arr[j]);
+
+        destroyList(&list);
+    } END_TEST
+
 START_TEST(test_linkedList_destroy) {
     pLinkedList list = makeList();
 
@@ -81,20 +95,22 @@ START_TEST(test_linkedList_destroy) {
   } END_TEST
 
 Suite* linkedList_test_suite() {
-  Suite *suite;
-  TCase *testCaseCore;
+    Suite *suite;
+    TCase *testCaseCore;
 
-  suite = suite_create("LinkedList");
+    suite = suite_create("LinkedList");
 
-  testCaseCore = tcase_create("Core");
+    testCaseCore = tcase_create("Core");
 
-  // Add test cases
-  tcase_add_test(testCaseCore, test_linkedList_make);
-  tcase_add_test(testCaseCore, test_linkedList_appendToList);
-  tcase_add_test(testCaseCore, test_linkedList_removeFront);
-  tcase_add_test(testCaseCore, test_linkedList_destroy);
+  // Test cases
 
-  suite_add_tcase(suite, testCaseCore);
+    tcase_add_test(testCaseCore, test_linkedList_make);
+    tcase_add_test(testCaseCore, test_linkedList_appendToList);
+    tcase_add_test(testCaseCore, test_linkedList_removeFront);
+    tcase_add_test(testCaseCore, test_linkedList_removeBack);
+    tcase_add_test(testCaseCore, test_linkedList_destroy);
 
-  return suite;
+    suite_add_tcase(suite, testCaseCore);
+
+    return suite;
 }

@@ -66,7 +66,7 @@ pLinkedList makeList();
  *
  * \return    unsigned int the new size of the queue.
  * */
-unsigned int appendToList(pLinkedList linkedList, T data);
+size_t appendToList(pLinkedList linkedList, T data);
 
 /**
  * \brief     Remove the front node and return it.
@@ -76,6 +76,15 @@ unsigned int appendToList(pLinkedList linkedList, T data);
  * \return    pNode the node structure.
  * */
 pNode popFront(pLinkedList linkedList);
+
+/**
+ * \brief     Remove the back node and return it.
+ *
+ * \param     pLinkedList linkedList
+ *
+ * \return    pNode the node structure.
+ * */
+pNode popBack(pLinkedList linkedList);
 
 /**
  * \brief     Deallocate the linkedList and its nodes.

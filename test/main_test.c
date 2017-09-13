@@ -25,26 +25,35 @@
 #include <stdlib.h>
 #include "queue_test.h"
 #include "linked_list_test.h"
+#include "stack_test.h"
 
 int main() {
 
-  int numberFailed = 0;
+    int numberFailed = 0;
 
-  // Queue Suite
-  Suite* queueSuite = queue_test_suite();
-  SRunner* queueSuiteRunner = srunner_create(queueSuite);
+    // Stack Suite
+    Suite* stackSuite = stack_test_suite();
+    SRunner* stackSuiteRunner = srunner_create(stackSuite);
 
-  srunner_run_all(queueSuiteRunner, CK_NORMAL);
-  numberFailed += srunner_ntests_failed(queueSuiteRunner);
-  srunner_free(queueSuiteRunner);
+    srunner_run_all(stackSuiteRunner, CK_NORMAL);
+    numberFailed += srunner_ntests_failed(stackSuiteRunner);
+    srunner_free(stackSuiteRunner);
 
-  // LinkedList Suite
-  Suite* linkedListSuite = linkedList_test_suite();
-  SRunner* linkedListRunner = srunner_create(linkedListSuite);
+    // Queue Suite
+    Suite* queueSuite = queue_test_suite();
+    SRunner* queueSuiteRunner = srunner_create(queueSuite);
 
-  srunner_run_all(linkedListRunner, CK_NORMAL);
-  numberFailed += srunner_ntests_failed(linkedListRunner);
-  srunner_free(linkedListRunner);
+    srunner_run_all(queueSuiteRunner, CK_NORMAL);
+    numberFailed += srunner_ntests_failed(queueSuiteRunner);
+    srunner_free(queueSuiteRunner);
 
-  return (numberFailed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
+    // LinkedList Suite
+    Suite* linkedListSuite = linkedList_test_suite();
+    SRunner* linkedListRunner = srunner_create(linkedListSuite);
+
+    srunner_run_all(linkedListRunner, CK_NORMAL);
+    numberFailed += srunner_ntests_failed(linkedListRunner);
+    srunner_free(linkedListRunner);
+
+    return (numberFailed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
