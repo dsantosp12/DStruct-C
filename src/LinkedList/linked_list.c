@@ -22,12 +22,17 @@
  * SOFTWARE.
  * */
 #include <stdlib.h>
+#include <stdio.h>
 #include "linked_list.h"
 
 pLinkedList makeList() {
   // Allocate enough space for a linked list, but malloc return a (void*)
   // We need to cast it to a pLinkedList.
   pLinkedList linkedList = (pLinkedList) malloc(sizeof(LinkedList));
+  if (linkedList == NULL) {
+    printf("Malloc failed\n");
+    return 0;
+  }
 
   // HOLY GRAIL STUFFS: Initialize everything!
   linkedList->head = NULL;
@@ -36,21 +41,29 @@ pLinkedList makeList() {
   return linkedList;
 }
 
-unsigned int appendToList(pLinkedList linkedList, T data) {
+size_t appendToList(pLinkedList linkedList, T data) {
 
   if (linkedList == NULL) return 0; // Failed, bye, linked list invalid
 
   // Because we are definitely appending a Node, lets make it.
   pNode newNode = (pNode) malloc(sizeof(Node));
+  if (newNode == NULL) {
+    printf("Malloc failed\n");
+    return 0;
+  }
   newNode->next = NULL;
   newNode->data = (T*) malloc(sizeof(T));
+  if (newNode->data == NULL) {
+    printf("Malloc failed\n");
+    return 0;
+  }
   *newNode->data = data;
 
   pNode head = linkedList->head;
 
   if (head == NULL) {  // Nothing in the list, so lets putt it on the head
     linkedList->head = newNode;
-  } else { // Stuffs in the list, lets go to the last node
+  } else { // Nodes in the list, lets go to the last node
     pNode current = head;
 
     while (current->next != NULL) current = current->next;
@@ -76,6 +89,36 @@ pNode popFront(pLinkedList linkedList) {
   front->next = NULL;
 
   return front;
+}
+
+pNode popBack(pLinkedList linkedList) {
+  if (linkedList == NULL) return NULL; // No linked list
+  if (linkedList->head == NULL) return NULL; // Nothing in the list
+  pNode back;
+
+
+  if(linkedList->head->next == NULL)
+  {
+      back = linkedList->head;
+      linkedList->head = NULL;
+  }
+  else
+  {
+      pNode current = linkedList->head;
+
+      // Go to the second to last node
+      while(current->next->next != NULL)
+      {
+          current = current->next;
+      }
+
+      back = current->next;
+      current->next = NULL;
+  }
+
+  linkedList->size--;
+
+  return back;
 }
 
 void destroyList(pLinkedList *pPLinkedList) {

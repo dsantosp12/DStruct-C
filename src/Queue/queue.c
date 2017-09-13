@@ -23,6 +23,7 @@
  * */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "queue.h"
 #include "../LinkedList/linked_list.h"
 
@@ -32,6 +33,10 @@ struct Queue {
 
 pQueue makeQueue() {
   pQueue newQueue = malloc(sizeof(Queue));
+  if (newQueue == NULL) {
+    printf("Malloc failed\n");
+    return 0;
+  }
 
   newQueue->buffer = makeList();
 

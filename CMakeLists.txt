@@ -12,6 +12,6 @@ set(SOURCE_FILES
         src/LinkedList/linked_list.h
         src/LinkedList/linked_list.c
         src/Queue/queue.h
-        src/Queue/queue.c)
+        src/Queue/queue.c src/Stack/stack.c src/Stack/stack.h)
 
 add_executable(C_DStruct ${SOURCE_FILES})
